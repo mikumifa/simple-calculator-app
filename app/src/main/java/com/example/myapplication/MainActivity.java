@@ -22,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setOutput(String output) {
         TextView tv = (TextView) findViewById(R.id.text);
-        tv.setText(output);
+        if (output.equals("")) {
+            tv.setText("0");
+        } else {
+            tv.setText(output);
+
+        }
     }
 
     private OnClickListener btnClick = new OnClickListener() {
@@ -38,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     input = new StringBuffer();
                     setOutput(input.toString());
                 } else if (Objects.equals(s, "backspace")) {
-                    if(input.length()!=0) {
+                    if (input.length() != 0) {
                         input.deleteCharAt(input.length() - 1);
                         setOutput(input.toString());
                     }
@@ -46,14 +51,17 @@ public class MainActivity extends AppCompatActivity {
                 } else if (Objects.equals(s, "change")) {
                     setOutput("change");
                 } else if (Objects.equals(s, "=")) {
-                    Double result = (Double) engine.eval(input.toString());
+                    if (input.length() != 0) {
+                        Double result = (Double) engine.eval(input.toString());
 
-                    if (result % 1 == 0) {
-                        int intValue = result.intValue();
-                        setOutput(Integer.toString(intValue));
-                    } else {
-                        setOutput(result.toString());
+                        if (result % 1 == 0) {
+                            int intValue = result.intValue();
+                            setOutput(Integer.toString(intValue));
+                        } else {
+                            setOutput(result.toString());
+                        }
                     }
+
                 } else {
                     input.append(s);
                     setOutput(input.toString());
