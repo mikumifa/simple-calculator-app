@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="number_key_0">0</string>
+    <string name="number_key_1">1</string>
+    <string name="number_key_2">2</string>
+    <string name="number_key_3">3</string>
+    <string name="number_key_4">4</string>
+    <string name="number_key_5">5</string>
+    <string name="number_key_6">6</string>
+    <string name="number_key_7">7</string>
+    <string name="number_key_8">8</string>
+    <string name="number_key_9">9</string>
+    <string name="add_key">+</string>
+    <string name="subtract_key">-</string>
+    <string name="multiply_key">×</string>
+    <string name="divide_key">÷</string>
+    <string name="equals_key">=</string>
+    <string name="clear_key">AC</string>
+    <string name="decimal_key">.</string>
+    <string name="percent">%</string>
+
+    <string name="change">#</string>
+    <string name="backspace">&lt;-</string>
+
+</resources>
