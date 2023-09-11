@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private StringBuffer input = new StringBuffer();
     // 声明一个Map来建立视图和字符之间的映射
     private HashMap<Integer, String> map;
+    private boolean isResult = false;
 
     private void setOutput(String output) {
         TextView tv = (TextView) findViewById(R.id.text);
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             tv.setText("0");
         } else {
 
-            tv.setText(output.replace('/', '÷'));
+            tv.setText(output.replace('/', '÷').replace('*', '×'));
 
         }
     }
@@ -41,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
                 String s = map.get(id);
                 if (Objects.equals(s, "AC")) {
+                    isResult=true;
                     input = new StringBuffer();
                     setOutput(input.toString());
                 } else if (Objects.equals(s, "backspace")) {
-                    if (input.length() != 0) {
+                    if (input.length() != 0&& !isResult) {
                         input.deleteCharAt(input.length() - 1);
                         setOutput(input.toString());
                     }
@@ -53,17 +55,29 @@ public class MainActivity extends AppCompatActivity {
                     setOutput("change");
                 } else if (Objects.equals(s, "=")) {
                     if (input.length() != 0) {
-                        Double result = (Double) engine.eval(input.toString());
+                        Double result = (Double) engine.eval(input.toString().replaceAll("%", "*0.01") + "+0");
 
                         if (result % 1 == 0) {
                             int intValue = result.intValue();
-                            setOutput(Integer.toString(intValue));
+                            input = new StringBuffer(Integer.toString(intValue));
+                            setOutput("=" + input.toString());
+                            isResult=true;
                         } else {
-                            setOutput(result.toString());
+                            input = new StringBuffer(result.toString());
+                            setOutput("=" + result.toString());
+                            isResult=true;
+
                         }
                     }
 
+                } else if (isOperation(s)) {
+                    isResult=false;
+                    if (isOperation(input.charAt(input.length() - 1) + ""))
+                        input.deleteCharAt(input.length() - 1);
+                    input.append(s);
+                    setOutput(input.toString());
                 } else {
+                    isResult=false;
                     input.append(s);
                     setOutput(input.toString());
                 }
@@ -74,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    private boolean isOperation(String s) {
+        return Objects.equals(s, "+") ||
+                Objects.equals(s, "-") ||
+                Objects.equals(s, "*") ||
+                Objects.equals(s, "/");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
