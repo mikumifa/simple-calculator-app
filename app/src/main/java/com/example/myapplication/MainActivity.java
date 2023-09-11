@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
         if (output.equals("")) {
             tv.setText("0");
         } else {
-            tv.setText(output);
+
+            tv.setText(output.replace('/', '÷'));
 
         }
     }
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     setOutput(input.toString());
                 }
 
-            } catch (ScriptException e) {
+            } catch (Exception e) {
                 setOutput("Input is wrong.");
             }
 
